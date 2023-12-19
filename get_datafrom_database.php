@@ -1,6 +1,6 @@
 <?php
 
-echo "This is a test.";
+
 /*
 //include_once 'send_datato_database.php';
 $idnumber = $_GET['idnumber'];
@@ -23,10 +23,10 @@ mysqli_close($Connect);
 
 include_once 'database_connect.php';
 
-//if (isset($_POST['idnumber'])) {
-   // $idnumber = $_POST['idnumber'];
-   // echo $idnumber;
-    //error_log('Received ID number: ' . $idnumber);
+if (isset($_POST['idnumber'])) {
+    $idnumber = $_POST['idnumber'];
+    echo $idnumber;
+    error_log('Received ID number: ' . $idnumber);
     // Fetch the complaint details from the database
     $nameFromDatabase = "SELECT * FROM `compain_details` WHERE ID_NO ='85012345678'";
     $resultName = mysqli_query($Connect, $nameFromDatabase);
@@ -39,13 +39,8 @@ include_once 'database_connect.php';
             $complainerNumber = $selectedrow['Complain_No'];
 
             // Return success response with data
-            $response = [
-                'success' => true,
-                'message' => 'Data retrieved successfully.',
-                'complainerName' => $complainerName,
-                'complainerNumber' => $complainerNumber,
-            ];
-
+            $response = ['complainerName'=> $complainerName,' complainerNumber'=>$complainerNumber];
+           // header('Content-Type: application/json');
             echo json_encode($response);
         } else {
             // Return an error message
@@ -67,7 +62,7 @@ include_once 'database_connect.php';
     }
 
     mysqli_close($Connect);
-/*} else {
+} else {
     // Return an error message
     $response = [
         'success' => false,
@@ -75,5 +70,5 @@ include_once 'database_connect.php';
     ];
 
     echo json_encode($response);
-}*/
+}
 ?>

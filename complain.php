@@ -128,7 +128,7 @@ System</div>
 
 
    document.addEventListener("DOMContentLoaded", function () {
-var name,address,idnumber,place,discription,dateandtime,imagesfile,organization;
+var name,address,idnumber,place,discription,dateandtime,imagesfile,organization,complainerNumber;
 
 
 document.getElementById("submitbutton").onclick =function(e) // add funtion to submit button 
@@ -195,6 +195,11 @@ organization=document.getElementById("Select_Organization").value;//Assighn the 
 
     console.log('Form submitted');
   
+   
+   
+
+
+   
     fetchData();
 
  
@@ -202,15 +207,25 @@ organization=document.getElementById("Select_Organization").value;//Assighn the 
 
 async function fetchData() {
   try {
-    
+    const idnumber = document.getElementById("nic").value;
+    const formData = new FormData();
+    formData.append('idnumber', idnumber);
+
     const response = await fetch('get_datafrom_database.php', {
       method: 'POST',
       body: new FormData()  // Use a new FormData object here
     });
-    const data = await response.text();
+
+    const data = await response.json();
+    console.log('Raw Server Response:', data);
+    //const data = await response.json();
     console.log('FetchData Call');
+    
+    
     console.log(data); 
-    <span>Name:</span> <?php echo $data['complainerNumber']; ?>
+   var complainerNumber = data.complainerNumber;
+    console.log('Complainer Number:',complainerNumber);
+
     // ... rest of the code ...
   } catch (error) {
     console.error('Error:', error);

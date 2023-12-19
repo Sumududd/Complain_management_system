@@ -13,8 +13,7 @@ include_once 'database_connect.php';
  $imagesfile = $_FILES['imagesfile'];
  $organization = $_POST['organization'];
 
- echo $name ;
- echo $address;
+ 
 
 
 
@@ -31,9 +30,9 @@ $sql ="INSERT INTO compain_details (Complainer_Name,Address, ID_NO, Place,Descri
 $connection=mysqli_query($Connect,$sql);
 
 if ($connection) {
-  echo "Record inserted successfully.";
+ // echo "Record inserted successfully.";
 } else {
-  echo "Error: " . $sql . "<br>" . mysqli_error($Connect);
+//  echo "Error: " . $sql . "<br>" . mysqli_error($Connect);
 }
 
 mysqli_close($Connect);
