@@ -23,12 +23,14 @@ mysqli_close($Connect);
 
 include_once 'database_connect.php';
 
-if (isset($_POST['idnumber'])) {
+/*if (isset($_POST['idnumber'])) {
     $idnumber = $_POST['idnumber'];
-    echo $idnumber;
-    error_log('Received ID number: ' . $idnumber);
+    */
+   
     // Fetch the complaint details from the database
-    $nameFromDatabase = "SELECT * FROM `compain_details` WHERE ID_NO ='85012345678'";
+    //$idnumberduplicate = $_POST['idnumberduplicate'];
+    $idnumber = $_GET['idnumber'];
+    $nameFromDatabase = "SELECT * FROM `compain_details` WHERE ID_NO ='$idnumber'";
     $resultName = mysqli_query($Connect, $nameFromDatabase);
 
     if ($resultName) {
@@ -39,8 +41,8 @@ if (isset($_POST['idnumber'])) {
             $complainerNumber = $selectedrow['Complain_No'];
 
             // Return success response with data
-            $response = ['complainerName'=> $complainerName,' complainerNumber'=>$complainerNumber];
-           // header('Content-Type: application/json');
+            $response = ['complainerName'=> $complainerName,'complainerNumber'=>$complainerNumber];
+         //header('Content-Type: application/json');
             echo json_encode($response);
         } else {
             // Return an error message
@@ -62,7 +64,7 @@ if (isset($_POST['idnumber'])) {
     }
 
     mysqli_close($Connect);
-} else {
+/*} else {
     // Return an error message
     $response = [
         'success' => false,
@@ -70,5 +72,5 @@ if (isset($_POST['idnumber'])) {
     ];
 
     echo json_encode($response);
-}
+}*/
 ?>

@@ -108,19 +108,19 @@ System</div>
 <button id="submitbutton" type="submit" class="btn btn-primary btn-lg btn-block mt-4">Submit the complain</button>
 </div>
 <div class="mb-3">
-<h2>Your Compalint Number is : <span class="badge badge-secondary">New</span></h2>  <!--retrive and relavent complain number -->
+<h2 id="complaintNumberTitle">Your Complaint Number is : <span class="badge badge-secondary">New</span></h2>  <!--retrive and relavent complain number -->
 </form>
 
-<p id ="printname">"Print name"</p>
-<p id ="printaddress">"Print address"</p>
-<p id ="printidnumber">"Print id"</p>
-<p id ="printlocation">"Print location"</p>
-<p id ="printdiscription">"discription"</p>
-<p id ="printddateandtime">"discription"</p>
-<p id ="printorganisation">"discription"</p>
-
-<p id ="complainerName">"discription"</p>
-
+<div class="shadow p-3 mb-5 bg-body rounded">Information submitted
+<p id ="printname"></p>
+<p id ="printaddress"></p>
+<p id ="printidnumber"></p>
+<p id ="printlocation"></p>
+<p id ="printdiscription"></p>
+<p id ="printddateandtime"></p>
+<p id ="printorganisation"></p>
+<p id ="complainerName"></p>
+</div>
 
 <img id="uploadedImage" style="max-width: 100%; margin-top: 10px;" />
 
@@ -151,19 +151,21 @@ organization=document.getElementById("Select_Organization").value;//Assighn the 
 
 
   
- document.getElementById("printname").innerHTML = name;
- document.getElementById("printaddress").innerHTML = address;
- document.getElementById("printidnumber").innerHTML = idnumber;
- document.getElementById("printlocation").innerHTML = place;
- document.getElementById("printdiscription").innerHTML = discription;
- document.getElementById("printddateandtime").innerHTML = dateandtime;
- document.getElementById("printorganisation").innerHTML = organization;
+ document.getElementById("printname").innerHTML = 'Name:  '+name+'</span>';
+ document.getElementById("printaddress").innerHTML ='Address:   '+address+'</span>';
+ document.getElementById("printidnumber").innerHTML = 'ID No:   '+idnumber+'</span>';
+ document.getElementById("printlocation").innerHTML = 'Place:   '+place+'</span>';
+ document.getElementById("printdiscription").innerHTML = 'Discription:   '+discription+'</span>';
+ document.getElementById("printddateandtime").innerHTML = 'Date and Time:   '+dateandtime+'</span>';
+ document.getElementById("printorganisation").innerHTML = 'Selected Organisation:  '+organization+'</span>';
  
+
 
  var formData=new FormData();
  formData.append('name',name);
  formData.append('address',address);
  formData.append('idnumber',idnumber);
+ //formData.append('idnumberduplicate',idnumber);
  formData.append('place',place);
  formData.append('discription',discription);
  formData.append('dateandtime',dateandtime);
@@ -195,8 +197,27 @@ organization=document.getElementById("Select_Organization").value;//Assighn the 
 
     console.log('Form submitted');
   
+
+
+
+/*
+    fetch('send_datato_database.php', {
+        method: 'POST',
+        body: formData
+    })
+    
    
-   
+    .then(response => response.text())
+    .then(data => {
+        console.log(data); // Output the response from the server
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+    console.log('Form submitted');
+  
+   */
 
 
    
@@ -207,13 +228,11 @@ organization=document.getElementById("Select_Organization").value;//Assighn the 
 
 async function fetchData() {
   try {
-    const idnumber = document.getElementById("nic").value;
-    const formData = new FormData();
-    formData.append('idnumber', idnumber);
-
-    const response = await fetch('get_datafrom_database.php', {
-      method: 'POST',
-      body: new FormData()  // Use a new FormData object here
+    
+    const response = await fetch(`get_datafrom_database.php?idnumber=${idnumber}`, {
+      method: 'GET',
+      
+       
     });
 
     const data = await response.json();
@@ -223,14 +242,25 @@ async function fetchData() {
     
     
     console.log(data); 
-   var complainerNumber = data.complainerNumber;
+    var complainerName = data.complainerName;
+    var complainerNumber = data.complainerNumber;
+
+    console.log('Complainer Name:',complainerName);
     console.log('Complainer Number:',complainerNumber);
+
+    document.getElementById('complaintNumberTitle').innerHTML = 'Your Complaint Number is:  ' + complainerNumber + '</span>';
+    complaintNumberTitle.style.backgroundColor = 'lightblue';
 
     // ... rest of the code ...
   } catch (error) {
     console.error('Error:', error);
   }
 }
+
+
+
+
+
 
   // Display the uploaded image
      // Display the uploaded image
